@@ -1,0 +1,50 @@
+-- Task 4
+
+SET GLOBAL general_log = 'ON';
+SET GLOBAL log_output = 'TABLE';
+DESCRIBE mysql.general_log;
+-- RUN A3TASK4
+
+SELECT SUBSTRING(CONVERT (argument USING utf8), 1, 6) AS command, event_time 
+FROM mysql.general_log
+WHERE
+	command_type IN ('Query') AND
+    (argument LIKE 'CREATE%' OR
+    argument LIKE 'ALTER%' OR
+    argument LIKE 'DROP%')
+GROUP BY command, event_time
+ORDER BY event_time;
+
++ ------------ + --------------- +
+| command      | event_time      |
++ ------------ + --------------- +
+| CREATE       | 2023-11-16 02:32:44.713241 |
+| CREATE       | 2023-11-16 02:32:44.735099 |
+| ALTER        | 2023-11-16 02:32:44.802273 |
+| DROP T       | 2023-11-16 02:32:44.862875 |
+| DROP T       | 2023-11-16 02:32:44.873889 |
++ ------------ + -------------------------- +
+5 rows
+
+SELECT SUBSTRING(CONVERT (argument USING utf8), 1, 6) AS command, COUNT(*) 
+FROM mysql.general_log
+WHERE
+	command_type IN ('Query') AND
+    (argument LIKE 'SELECT%' OR
+    argument LIKE 'INSERT%' OR
+    argument LIKE 'DELETE%' OR
+    argument LIKE 'UPDATE%')
+GROUP BY command
+ORDER BY COUNT(*) DESC;
+
++ ------------ + ------------- +
+| command      | COUNT(*)      |
++ ------------ + ------------- +
+| SELECT       | 53            |
+| DELETE       | 30            |
+| INSERT       | 15            |
+| UPDATE       | 6             |
++ ------------ + ------------- +
+4 rows
+
+SET GLOBAL general_log='OFF'

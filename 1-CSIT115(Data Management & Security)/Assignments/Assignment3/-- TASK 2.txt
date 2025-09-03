@@ -1,0 +1,52 @@
+-- TASK 2
+
+-- (CUSTOMER IS BACKUPFILE)
+-- (CUSTOMER 2 IS MODIFIED) USING A3Task2
+
+SELECT * FROM CUSTOMER2
+WHERE (CNum) NOT IN (SELECT CNum FROM CUSTOMER);
+
+-- Rows added
++ --------- + ---------- + ----------- +
+| CNum      | CName      | CEmail      |
++ --------- + ---------- + ----------- +
+| C10001    | Richard Teng | richardteng@gmail.com |
+| C10002    | Selena Tang | selenatang@gmail.com |
+| C10003    | Anika      | anika@gmail.com |
+| C10019    | Aati       | aati@gmail.com |
+| C10020    | Afan       | afan@gmail.com |
+| NULL      | NULL       | NULL        |
++ --------- + ---------- + ----------- +
+6 rows
+
+-- Rows deleted
+
+SELECT * FROM CUSTOMER
+WHERE (CNum) NOT IN (SELECT CNum FROM CUSTOMER2);
+
++ --------- + ---------- + ----------- +
+| CNum      | CName      | CEmail      |
++ --------- + ---------- + ----------- +
+| C10017    | Steven Ong | stevenong@gmail.com |
+| C10018    | Siti Aisyah | aisyah@gmail.com |
+| NULL      | NULL       | NULL        |
++ --------- + ---------- + ----------- +
+3 rows
+
+-- Rows changed
+
+SELECT *
+FROM customer c
+JOIN customer2 z ON c.cnum = z.cnum
+WHERE
+    c.cname != z.cname OR
+    c.cemail != z.cemail;
+
++ --------- + ---------- + ----------- + --------- + ---------- + ----------- +
+| CNum      | CName      | CEmail      | CNum      | CName      | CEmail      |
++ --------- + ---------- + ----------- + --------- + ---------- + ----------- +
+| C10011    | Tony Lim   | tonylim@gmail.com | C10011    | Tony Lim   | limtony     |
+| C10015    | George Lim | georgelim@gmail.com | C10015    | George Lim | limgeorge   |
+| C10016    | Linda Chew | lindachew@gmail.com | C10016    | Chew Linda | lindachew@gmail.com |
++ --------- + ---------- + ----------- + --------- + ---------- + ----------- +
+3 rows

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>207</x>
+      <y>162</y>
+      <w>117</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Contract
+--
+code ID
+start date
+end date
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>315</x>
+      <y>189</y>
+      <w>171</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+r1=
+m2=1..*
+covers &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>468</x>
+      <y>153</y>
+      <w>117</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Buildings
+--
+block number  ID1
+street name     ID1
+postal code     ID1
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>738</x>
+      <y>153</y>
+      <w>117</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Lifts
+--
+manufacturer
+model ID
+capacity
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>630</x>
+      <y>189</y>
+      <w>126</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+r1=
+m2=0..1
+has &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>207</x>
+      <y>378</y>
+      <w>117</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>Employee
+--
+employee no. ID1
+name
+gender
+DOB
+email             ID2
+phone no.
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>522</y>
+      <w>117</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Technicians
+--
+certificate
+specialty (0..*)
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>216</x>
+      <y>486</y>
+      <w>36</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>207</x>
+      <y>261</y>
+      <w>90</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..*
+m2=1..*
+settled by v</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>315</y>
+      <w>117</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Customer
+--
+customer code ID
+name
+address
+phone
+email
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>315</x>
+      <y>243</y>
+      <w>162</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..*
+m2=1..1
+signed by v</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0;140.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>756</x>
+      <y>414</y>
+      <w>117</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Service record
+--
+service no. ID
+service date
+service detail
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>774</x>
+      <y>522</y>
+      <w>90</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Service type
+--
+routine
+repair
+emergency
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>801</x>
+      <y>477</y>
+      <w>45</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes>30.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>315</x>
+      <y>459</y>
+      <w>459</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..*
+r1=
+m2=1..*
+handles &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;490.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>315</x>
+      <y>216</y>
+      <w>504</w>
+      <h>261</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..*
+r1=
+m2=1..*
+repairs ^</panel_attributes>
+    <additional_attributes>10.0;260.0;290.0;260.0;290.0;160.0;520.0;160.0;520.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>819</x>
+      <y>216</y>
+      <w>54</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..1
+m2=1..*
+for ^</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>369</x>
+      <y>27</y>
+      <w>117</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Residential
+--
+
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>495</x>
+      <y>27</y>
+      <w>117</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Commercial
+--
+operating hours
+...
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>63</y>
+      <w>81</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes>70.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>513</x>
+      <y>63</y>
+      <w>36</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes>10.0;100.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>585</x>
+      <y>189</y>
+      <w>54</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lift name
+...  
+bg=#dddddd</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

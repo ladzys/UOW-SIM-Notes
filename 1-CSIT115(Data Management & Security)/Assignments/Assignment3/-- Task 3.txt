@@ -1,0 +1,15 @@
+-- Task 3
+
+SELECT CONCAT ('A member with the customer number of ', R.Cnum, ' and having the name ', C.CName, ' is both an elite member and a regular member') AS Verification
+FROM regularmember R
+JOIN customer C
+ON R.Cnum = C.Cnum
+WHERE EXISTS (SELECT * FROM elitemember E WHERE E.Cnum = R.Cnum);
+
++ ----------------- +
+| Verification      |
++ ----------------- +
+| A member with the customer number of C10012 and having the name Tharman Krishna is both an elite member and a regular member |
+| A member with the customer number of C10013 and having the name Tang King King is both an elite member and a regular member |
++ ----------------- +
+2 rows

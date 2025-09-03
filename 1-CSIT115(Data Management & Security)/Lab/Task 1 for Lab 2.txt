@@ -1,0 +1,46 @@
+Task 1 for Lab 2
+
+Hotel(name,city,street,bldg#,stars)
+PK:(name,city)
+CK:(street, city, bldg#)
+
+Guest(passport,nationality,name,credit-card)
+PK:(passport,nationality)
+CK:(credit-card)
+
+Visits(name,city,passport,nationality,when-arrived,when-left)
+PK:(name,city,passport,nationality,when-arrived )
+FK1(name,city) references Hotel(name,city)
+FK2(passport,nationality) references Guest(passport,nationality)
+
+Standard(name,city,room#,bed#,area)
+PK:(name,city,room#)
+FK:(name,city) references Hotel(name,city)
+
+Deluxe(name,city,room#,bed#,area)
+PK:(name,city,room#)
+FK:(name,city) references Hotel(name,city)
+
+Room-Facilities(name,city,room#,facilities)
+PK:(name,city,room#,facilities)
+FK:(name,city,room#) references Deluxe(name,city,room#)
+---------------------------------------------------------------------------
+Task 4
+
+Company(cname,city,street,bldgnum,email)
+PK:(name)
+CK1:(city,street,bldgnum)
+CK2:(email)
+
+company-name(cname,phone)
+PK:(phone)
+FK:(cname) reference company(cname)
+
+Department(dname,cname,mgr)
+PK:(dname,cname)
+FK1:(dname) references Company(dname)
+FK2: (mgr) references Employee(enumber)
+
+Employee(enumber,first-name,last-name,date-of-birth,salary,cname,dname)
+PK: (enumber)
+FK:(cname,dname) references Department(cname,dname)

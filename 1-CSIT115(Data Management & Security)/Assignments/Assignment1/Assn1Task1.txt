@@ -1,0 +1,348 @@
+Task 1A) Class to relational
+-----------------------------
+
+Item(serial_no, description, model, remarks)
+PK: (serial_no)
+
+Loan(date-in, purpose, remarks, date-out, emp-id, seriel_no, ref-no)
+PK: (seriel_no,date-out,emp-id)
+FK1: (serial_no) references Item(serial_no)
+FK2: (ref-no) references DamagePayment(ref-no)
+FK3: (emp-id) references Employee(emp-id)
+
+DamagePayment(ref-no, description, amount, date-paid)
+PK: (ref-no)
+
+Employee(emp-id, name, gender, phone, email)
+PK: (emp-id)
+CK: (email)
+
+
+Camera(resolution, memory-card, seriel_no)
+PK:(serial_no)
+FK:(seriel_no) references Item(seriel_no)
+
+ServiceProvider(name, address, phone, email)
+PK:(name)
+CK1:(address)
+CK2:(phone)
+CK3:(email)
+
+servicedBy(serial_no,name,date-serviced,details,fee)
+PK:(serial_no,date-serviced,name)
+FK1:(serial_no) references Item(serial_no)
+FK2:(name) references ServiceProvider(name)
+
+
+
+
+-- Task 1B) Create Tables
+-----------------------
+-- CREATE TABLE Statement
+CREATE TABLE item
+(
+  serial_no   VARCHAR(20),
+  description VARCHAR(30),
+  model       VARCHAR(20),
+  remarks     VARCHAR(30),
+  CONSTRAINT itemPK PRIMARY KEY (serial_no)
+);
+
+CREATE TABLE employee
+(
+  emp_Id INT,
+  name   VARCHAR(20),
+  gender CHAR(1),
+  phone  CHAR(8),
+  email  VARCHAR(30) NOT NULL,
+  CONSTRAINT employeePK PRIMARY KEY (emp_ID),
+  CONSTRAINT employeeCK UNIQUE (email),
+  CONSTRAINT chkgender CHECK (gender = 'M' OR gender = 'F')
+);
+
+CREATE TABLE damagePayment
+(
+  ref_no VARCHAR(20),
+  description VARCHAR(30),
+  amount DECIMAL (10, 2),
+  date_paid DATE,
+  CONSTRAINT damagePaymentPK PRIMARY KEY (ref_no)
+);
+
+CREATE TABLE camera
+(
+  serial_no   VARCHAR(20),
+  description VARCHAR(30),
+  model       VARCHAR(20),
+  remarks     VARCHAR(30),
+  resolution  VARCHAR(10),
+  memory_card VARCHAR(30),
+  CONSTRAINT itemPK PRIMARY KEY (serial_no),
+  CONSTRAINT camFK FOREIGN KEY (serial_no) REFERENCES item (serial_no)
+);
+
+CREATE TABLE serviceProvider
+(
+  name    VARCHAR(20),
+  address VARCHAR(30) NOT NULL,
+  phone   CHAR(8) NOT NULL,
+  email   VARCHAR(30) NOT NULL,
+  CONSTRAINT serviceProviderPK PRIMARY KEY (name),
+  CONSTRAINT serviceProviderCK1 UNIQUE (address),
+  CONSTRAINT serviceProviderCK2 UNIQUE (phone),
+  CONSTRAINT serviceProviderCK3 UNIQUE (email)
+);
+
+CREATE TABLE loan
+(
+  lemp_Id     INT,
+  lserial_no  VARCHAR(20),
+  lref_no     VARCHAR(20),
+  date_in     DATE NOT NULL,
+  date_out    DATE,
+  purpose     VARCHAR(30),
+  remarks     VARCHAR(30),
+  CONSTRAINT loanPK PRIMARY KEY (lemp_Id, lserial_no, date_out),
+  CONSTRAINT loanFK1 FOREIGN KEY (lemp_Id) REFERENCES employee (emp_ID),
+  CONSTRAINT loanFK2 FOREIGN KEY (lserial_no) REFERENCES item (serial_no),
+  CONSTRAINT loanFK3 FOREIGN KEY (lref_no) REFERENCES damagePayment (ref_no)
+);
+
+CREATE TABLE servicedBy
+(
+  sbname VARCHAR(20),
+  sbserial_no VARCHAR(20),
+  date_serviced DATE,
+  details VARCHAR(30),
+  fee DECIMAL (10, 2),
+  CONSTRAINT servicedByPK PRIMARY KEY (sbname, sbserial_no),
+  CONSTRAINT servicedByFK1 FOREIGN KEY (sbserial_no) REFERENCES item (serial_no),
+  CONSTRAINT servicedByFK2 FOREIGN KEY (sbname) REFERENCES serviceProvider (name)
+);
+
+
+
+-- Task 1C) Alter tables
+----------------------
+ALTER TABLE item ADD status VARCHAR(20) DEFAULT 'Available'; 
+ALTER TABLE item ADD CONSTRAINT chkstatus CHECK (status IN ('Available', 'On loan', 'Under service')); 
+ALTER TABLE damagePayment ADD CONSTRAINT CHECK (amount > 0);
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Assignment 2 Task 2
+
+-- Task 2A 
+
+SELECT empID,name,dob,trainyears
+FROM trainer,qualification
+WHERE empID = trainer
+GROUP BY empID,name,dob,trainyears
+HAVING COUNT(*) > 1;
+
++ ---------- + --------- + -------- + --------------- +
+| empID      | name      | dob      | trainYears      |
++ ---------- + --------- + -------- + --------------- +
+| T001       | Ding Dong | 1980-10-20 | 8               |
+| T009       | Mah Cheng | 1999-11-20 | 2               |
++ ---------- + --------- + -------- + --------------- +
+2 rows
+
+
+-- Task 2B
+
+SELECT oc.code, c.name, startDate, endDate, t.name
+FROM course c
+JOIN offeredcourse oc
+ON oc.code = c.code
+JOIN trainer t
+ON oc.trainer = t.empid
+WHERE oc.code in (
+SELECT code FROM offeredcourse
+GROUP BY code
+HAVING COUNT(code)>2
+ORDER BY oc.code ASC
+);
+
++ --------- + --------- + -------------- + ------------ + --------- +
+| code      | name      | startDate      | endDate      | name      |
++ --------- + --------- + -------------- + ------------ + --------- +
+| C001      | Internet Architecture | 2022-01-17     | 2022-01-17   | Ding Dong |
+| C001      | Internet Architecture | 2022-05-27     | 2022-05-27   | Ding Dong |
+| C001      | Internet Architecture | 2023-01-28     | 2023-01-28   | Fong Ping |
+| C011      | Shorthand Writing | 2022-01-03     | 2022-01-03   | Jing Hong |
+| C011      | Shorthand Writing | 2022-05-03     | 2022-05-03   | Jing Hong |
+| C011      | Shorthand Writing | 2022-09-05     | 2022-09-05   | Ling Teck |
+| C011      | Shorthand Writing | 2022-11-02     | 2022-11-02   | Ling Teck |
+| C012      | Accounting | 2023-01-02     | 2023-01-03   | Liew Ming |
+| C012      | Accounting | 2023-03-02     | 2023-03-03   | Liew Ming |
+| C012      | Accounting | 2023-05-03     | 2023-05-04   | Liew Ming |
+| C012      | Accounting | 2023-07-04     | 2023-07-05   | Liew Ming |
+| C031      | Cupcakes  | 2022-02-14     | 2022-02-14   | Ming Yuan |
+| C031      | Cupcakes  | 2022-04-14     | 2022-04-14   | Ming Yuan |
+| C031      | Cupcakes  | 2022-06-14     | 2022-06-14   | Ming Yuan |
+| C031      | Cupcakes  | 2022-08-14     | 2023-08-14   | Ming Yuan |
+| C032      | Brownies  | 2023-02-15     | 2023-02-15   | Ning Ning |
+| C032      | Brownies  | 2023-04-15     | 2023-04-15   | Ning Ning |
+| C032      | Brownies  | 2023-06-15     | 2023-06-15   | Ning Ning |
+| C032      | Brownies  | 2023-08-15     | 2023-08-15   | Ning Ning |
++ --------- + --------- + -------------- + ------------ + --------- +
+19 rows
+
+-- TASK 2C
+
+SELECT t.refid, t.name, t.workyears, t.worktype, c.code, c.name, e.odate
+FROM Course c JOIN Enrolment e
+ON c.code = e.ocourse
+JOIN trainee t ON t.refid = e.trainee
+WHERE workyears > 15
+ORDER BY refid ASC;
+
++ ---------- + --------- + -------------- + ------------- + --------- + --------- + ---------- +
+| refid      | name      | workyears      | worktype      | code      | name      | odate      |
++ ---------- + --------- + -------------- + ------------- + --------- + --------- + ---------- +
+| R001       | Low Cindy | 20             | Finance       | C001      | Internet Architecture | 2022-05-27 |
+| R001       | Low Cindy | 20             | Finance       | C011      | Shorthand Writing | 2022-01-03 |
+| R001       | Low Cindy | 20             | Finance       | C021      | Japanese  | 2022-08-21 |
+| R001       | Low Cindy | 20             | Finance       | C031      | Cupcakes  | 2022-02-14 |
+| R001       | Low Cindy | 20             | Finance       | C032      | Brownies  | 2023-02-15 |
+| R002       | Lim Henry | 17             | Accounting    | C001      | Internet Architecture | 2022-05-27 |
+| R002       | Lim Henry | 17             | Accounting    | C011      | Shorthand Writing | 2022-01-03 |
+| R002       | Lim Henry | 17             | Accounting    | C021      | Japanese  | 2022-08-21 |
+| R003       | Lee Lucas | 16             | Engineering   | C001      | Internet Architecture | 2022-05-27 |
+| R003       | Lee Lucas | 16             | Engineering   | C011      | Shorthand Writing | 2022-01-03 |
+| R003       | Lee Lucas | 16             | Engineering   | C021      | Japanese  | 2022-08-21 |
+| R004       | Lin Ringo | 16             | Engineering   | C001      | Internet Architecture | 2022-05-27 |
+| R004       | Lin Ringo | 16             | Engineering   | C011      | Shorthand Writing | 2022-01-03 |
+| R004       | Lin Ringo | 16             | Engineering   | C021      | Japanese  | 2022-08-21 |
++ ---------- + --------- + -------------- + ------------- + --------- + --------- + ---------- +
+14 rows
+
+-- TASK 2D
+DELETE FROM trainer WHERE name='Heng Hoon';
+
+-- Check if Heng Hoon is deleted from Trainer table and offeredcourse table
+
+SELECT * FROM Trainer;
+
++ ---------- + --------- + -------- + --------------- +
+| empId      | name      | dob      | trainYears      |
++ ---------- + --------- + -------- + --------------- +
+| T001       | Ding Dong | 1980-10-20 | 8               |
+| T002       | Fong Ping | 1983-11-20 | 7               |
+| T004       | Heng Yong | 1983-11-20 | 6               |
+| T005       | Jing Ling | 1986-11-20 | 4               |
+| T006       | Jing Hong | 1991-11-20 | 4               |
+| T007       | Ling Teck | 1995-11-20 | 3               |
+| T008       | Liew Ming | 1998-11-20 | 3               |
+| T009       | Mah Cheng | 1999-11-20 | 2               |
+| T010       | Mok Liang | 2000-11-20 | 1               |
+| T021       | Loo Kwang | 1993-05-20 | 3               |
+| T022       | Long Tian | 1993-08-20 | 3               |
+| T031       | Ming Yuan | 1995-03-28 | 3               |
+| T032       | Ning Ning | 1995-09-28 | 5               |
+| NULL       | NULL      | NULL     | NULL            |
++ ---------- + --------- + -------- + --------------- +
+14 rows
+
+
+SELECT * FROM OfferedCourse;
+
++ --------- + -------------- + ------------ + ------------- + ------------ +
+| code      | startDate      | endDate      | duration      | trainer      |
++ --------- + -------------- + ------------ + ------------- + ------------ +
+| C001      | 2022-01-17     | 2022-01-17   | 1             | T001         |
+| C001      | 2022-05-27     | 2022-05-27   | 1             | T001         |
+| C001      | 2023-01-28     | 2023-01-28   | 1             | T002         |
+| C002      | 2022-03-26     | 2022-03-26   | 1             | T001         |
+| C002      | 2023-05-23     | 2023-05-23   | 1             | T002         |
+| C011      | 2022-01-03     | 2022-01-03   | 1             | T006         |
+| C011      | 2022-05-03     | 2022-05-03   | 1             | T006         |
+| C011      | 2022-09-05     | 2022-09-05   | 1             | T007         |
+| C011      | 2022-11-02     | 2022-11-02   | 1             | T007         |
+| C012      | 2023-01-02     | 2023-01-03   | 2             | T008         |
+| C012      | 2023-03-02     | 2023-03-03   | 2             | T008         |
+| C012      | 2023-05-03     | 2023-05-04   | 2             | T008         |
+| C012      | 2023-07-04     | 2023-07-05   | 2             | T008         |
+| C021      | 2022-08-21     | 2022-08-23   | 3             | T021         |
+| C021      | 2023-04-21     | 2023-04-23   | 3             | T021         |
+| C022      | 2022-08-24     | 2022-12-26   | 3             | T022         |
+| C022      | 2023-04-24     | 2023-04-26   | 3             | T022         |
+| C023      | 2022-08-27     | 2022-08-29   | 3             | T022         |
+| C023      | 2023-04-27     | 2023-04-29   | 3             | T022         |
+| C031      | 2022-02-14     | 2022-02-14   | 1             | T031         |
+| C031      | 2022-04-14     | 2022-04-14   | 1             | T031         |
+| C031      | 2022-06-14     | 2022-06-14   | 1             | T031         |
+| C031      | 2022-08-14     | 2023-08-14   | 1             | T031         |
+| C032      | 2023-02-15     | 2023-02-15   | 1             | T032         |
+| C032      | 2023-04-15     | 2023-04-15   | 1             | T032         |
+| C032      | 2023-06-15     | 2023-06-15   | 1             | T032         |
+| C032      | 2023-08-15     | 2023-08-15   | 1             | T032         |
+| NULL      | NULL           | NULL         | NULL          | NULL         |
++ --------- + -------------- + ------------ + ------------- + ------------ +
+28 rows
+
+-- TASK 2E
+INSERT INTO Course (code, category,name,level)
+VALUES ('C501', 'Language', 'Mandarin', 1);
+INSERT INTO OfferedCourse(code, startdate, enddate, duration, trainer)
+VALUES ('C501', '2024-02-18', '2024-02-18', 1, 'T021');
+
+-- Check if values are inserted into Course table and offeredcourse table
+
+SELECT * FROM Course;
+
++ --------- + ------------- + --------- + ---------- +
+| code      | category      | name      | level      |
++ --------- + ------------- + --------- + ---------- +
+| C001      | IT            | Internet Architecture | 1          |
+| C002      | IT            | Ecommerce Architecture | 2          |
+| C003      | IT            | Programming | 3          |
+| C011      | Business      | Shorthand Writing | 1          |
+| C012      | Business      | Accounting | 2          |
+| C021      | Language      | Japanese  | 1          |
+| C022      | Language      | Korean 1  | 1          |
+| C023      | Language      | Korean 2  | 2          |
+| C031      | Dessert       | Cupcakes  | 1          |
+| C032      | Dessert       | Brownies  | 2          |
+| C033      | Dessert       | Puddings  | 3          |
+| C501      | Language      | Mandarin  | 1          |
+| NULL      | NULL          | NULL      | NULL       |
++ --------- + ------------- + --------- + ---------- +
+13 rows
+
+SELECT * FROM OfferedCourse;
+
++ --------- + -------------- + ------------ + ------------- + ------------ +
+| code      | startDate      | endDate      | duration      | trainer      |
++ --------- + -------------- + ------------ + ------------- + ------------ +
+| C001      | 2022-01-17     | 2022-01-17   | 1             | T001         |
+| C001      | 2022-05-27     | 2022-05-27   | 1             | T001         |
+| C001      | 2023-01-28     | 2023-01-28   | 1             | T002         |
+| C002      | 2022-03-26     | 2022-03-26   | 1             | T001         |
+| C002      | 2023-05-23     | 2023-05-23   | 1             | T002         |
+| C011      | 2022-01-03     | 2022-01-03   | 1             | T006         |
+| C011      | 2022-05-03     | 2022-05-03   | 1             | T006         |
+| C011      | 2022-09-05     | 2022-09-05   | 1             | T007         |
+| C011      | 2022-11-02     | 2022-11-02   | 1             | T007         |
+| C012      | 2023-01-02     | 2023-01-03   | 2             | T008         |
+| C012      | 2023-03-02     | 2023-03-03   | 2             | T008         |
+| C012      | 2023-05-03     | 2023-05-04   | 2             | T008         |
+| C012      | 2023-07-04     | 2023-07-05   | 2             | T008         |
+| C021      | 2022-08-21     | 2022-08-23   | 3             | T021         |
+| C021      | 2023-04-21     | 2023-04-23   | 3             | T021         |
+| C022      | 2022-08-24     | 2022-12-26   | 3             | T022         |
+| C022      | 2023-04-24     | 2023-04-26   | 3             | T022         |
+| C023      | 2022-08-27     | 2022-08-29   | 3             | T022         |
+| C023      | 2023-04-27     | 2023-04-29   | 3             | T022         |
+| C031      | 2022-02-14     | 2022-02-14   | 1             | T031         |
+| C031      | 2022-04-14     | 2022-04-14   | 1             | T031         |
+| C031      | 2022-06-14     | 2022-06-14   | 1             | T031         |
+| C031      | 2022-08-14     | 2023-08-14   | 1             | T031         |
+| C032      | 2023-02-15     | 2023-02-15   | 1             | T032         |
+| C032      | 2023-04-15     | 2023-04-15   | 1             | T032         |
+| C032      | 2023-06-15     | 2023-06-15   | 1             | T032         |
+| C032      | 2023-08-15     | 2023-08-15   | 1             | T032         |
+| C501      | 2024-02-18     | 2024-02-18   | 1             | T021         |
+| NULL      | NULL           | NULL         | NULL          | NULL         |
++ --------- + -------------- + ------------ + ------------- + ------------ +
+29 rows

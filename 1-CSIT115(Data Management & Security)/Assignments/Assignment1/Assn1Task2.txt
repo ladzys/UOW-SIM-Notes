@@ -1,0 +1,34 @@
+Zone(name,description)
+PK:(name)
+
+Clinic(code,address,phone,ops-hours,name)
+PK: (code)
+CK1: (address)
+CK2: (phone)
+FK: (name) references zone(name)
+
+MedProcedure(name,detail,fee)
+PK: (name)
+
+Provides(Medprocedure code,clnic code)
+PK:(Medprocedure code,clnic code)
+FK1: (Medprocedure code) references MedProcedure(name)
+FK2: (Clinic code) references Clinic(code)
+
+Doctor(permit-no, name, gender,dob)
+PK: (permit-no)
+
+WorksAt(permit-no, clinic code)
+PK: (permit-no,clinic code)
+FK1: (permit-no) references Doctor(permit-no)
+FK2 (clinic code) references Clinic(code)
+
+MedRecord(symptoms,treatment,remarks,
+          permit-no,clinic code,patient-no., date)
+PK: (permit-no,clinic code,patient-no,date)
+FK1: (permit-no) references Doctor(permit no)
+FK2: (clinic code) references Clinic(code)
+FK3: (patient-no) references Patient(patient-no)
+
+Patient (patient-no,name,gender,dob,address,phone)
+PK: (patient-no)

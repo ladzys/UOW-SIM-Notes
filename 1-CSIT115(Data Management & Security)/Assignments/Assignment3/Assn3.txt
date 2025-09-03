@@ -1,0 +1,204 @@
+Assignment 3
+
+-- Task 1
+
+-- Part 1
+CREATE USER mohamedh027_1 IDENTIFIED BY 'mohamedh027_1';
+CREATE USER mohamedh027_2 IDENTIFIED BY 'mohamedh027_2';
+CREATE USER mohamedh027_3 IDENTIFIED BY 'mohamedh027_3';
+
+-- Part 2
+GRANT ALTER, DROP, SELECT, INSERT, UPDATE, DELETE ON mohamedh027.* TO mohamedh027_1
+WITH GRANT OPTION;
+
+-- Part 3
+GRANT CREATE VIEW, SELECT ON mohamedh027.customer to mohamedh027_2;
+GRANT CREATE VIEW, SELECT ON mohamedh027.member to mohamedh027_2;
+
+-- Part 4
+ALTER USER mohamedh027_3 WITH MAX_QUERIES_PER_HOUR 100;
+ALTER USER mohamedh027_3 WITH MAX_UPDATES_PER_HOUR 10;
+
+-- Part 5
+ALTER USER mohamedh027_2 PASSWORD EXPIRE;
+
+-- Part 6
+SELECT User, max_questions, max_updates, password_expired FROM mysql.user WHERE User LIKE 'mohamedh027%';
+
++ --------- + ------------------ + ---------------- + --------------------- +
+| User      | max_questions      | max_updates      | password_expired      |
++ --------- + ------------------ + ---------------- + --------------------- +
+| mohamedh027_1 | 0                  | 0                | N                     |
+| mohamedh027_2 | 0                  | 0                | Y                     |
+| mohamedh027_3 | 100                | 10               | N                     |
++ --------- + ------------------ + ---------------- + --------------------- +
+3 rows
+
+SELECT User, Select_priv, Insert_priv, Update_priv, Delete_priv, Drop_priv, Grant_priv, Alter_priv FROM mysql.db WHERE User LIKE 'mohamedh027%';
+
++ --------- + ---------------- + ---------------- + ---------------- + ---------------- + -------------- + --------------- + --------------- +
+| User      | Select_priv      | Insert_priv      | Update_priv      | Delete_priv      | Drop_priv      | Grant_priv      | Alter_priv      |
++ --------- + ---------------- + ---------------- + ---------------- + ---------------- + -------------- + --------------- + --------------- +
+| mohamedh027_1 | Y                | Y                | Y                | Y                | Y              | Y               | Y               |
++ --------- + ---------------- + ---------------- + ---------------- + ---------------- + -------------- + --------------- + --------------- +
+1 rows
+
+SELECT Db, User, Table_name, Table_priv FROM mysql.tables_priv WHERE USER LIKE 'mohamedh027%';
+
++ ------- + --------- + --------------- + --------------- +
+| Db      | User      | Table_name      | Table_priv      |
++ ------- + --------- + --------------- + --------------- +
+| mohamedh027 | mohamedh027_2 | customer        | Select,Create View |
+| mohamedh027 | mohamedh027_2 | member          | Select,Create View |
++ ------- + --------- + --------------- + --------------- +
+2 rows
+-----------------------------------------------------------------------------------------------------------------------------------------------
+-- TASK 2
+
+-- (CUSTOMER IS BACKUPFILE)
+-- (CUSTOMER 2 IS MODIFIED) USING A3Task2
+
+SELECT * FROM CUSTOMER2
+WHERE (CNum) NOT IN (SELECT CNum FROM CUSTOMER);
+
+-- Rows added
++ --------- + ---------- + ----------- +
+| CNum      | CName      | CEmail      |
++ --------- + ---------- + ----------- +
+| C10001    | Richard Teng | richardteng@gmail.com |
+| C10002    | Selena Tang | selenatang@gmail.com |
+| C10003    | Anika      | anika@gmail.com |
+| C10019    | Aati       | aati@gmail.com |
+| C10020    | Afan       | afan@gmail.com |
+| NULL      | NULL       | NULL        |
++ --------- + ---------- + ----------- +
+6 rows
+
+-- Rows deleted
+
+SELECT * FROM CUSTOMER
+WHERE (CNum) NOT IN (SELECT CNum FROM CUSTOMER2);
+
++ --------- + ---------- + ----------- +
+| CNum      | CName      | CEmail      |
++ --------- + ---------- + ----------- +
+| C10017    | Steven Ong | stevenong@gmail.com |
+| C10018    | Siti Aisyah | aisyah@gmail.com |
+| NULL      | NULL       | NULL        |
++ --------- + ---------- + ----------- +
+3 rows
+
+-- Rows changed
+
+SELECT *
+FROM customer c
+JOIN customer2 z ON c.cnum = z.cnum
+WHERE
+    c.cname != z.cname OR
+    c.cemail != z.cemail;
+
++ --------- + ---------- + ----------- + --------- + ---------- + ----------- +
+| CNum      | CName      | CEmail      | CNum      | CName      | CEmail      |
++ --------- + ---------- + ----------- + --------- + ---------- + ----------- +
+| C10011    | Tony Lim   | tonylim@gmail.com | C10011    | Tony Lim   | limtony     |
+| C10015    | George Lim | georgelim@gmail.com | C10015    | George Lim | limgeorge   |
+| C10016    | Linda Chew | lindachew@gmail.com | C10016    | Chew Linda | lindachew@gmail.com |
++ --------- + ---------- + ----------- + --------- + ---------- + ----------- +
+3 rows
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Task 3
+
+SELECT R.CClub, R.CNum, R.PointstoUpgrade, C.CName, CONCAT ('A member which is an elite member should NOT be a regular member') AS Violation,
+CONCAT ('A member with the customer number of ', R.Cnum, ' and having the name ', C.CName, ' is both an elite member and a regular member') AS Verification
+FROM regularmember R
+JOIN customer C
+ON R.Cnum = C.Cnum
+WHERE EXISTS (SELECT * FROM elitemember E WHERE E.Cnum = R.Cnum);
+
++ ---------- + --------- + -------------------- + ---------- + -------------- + ----------------- +
+| CClub      | CNum      | PointstoUpgrade      | CName      | Violation      | Verification      |
++ ---------- + --------- + -------------------- + ---------- + -------------- + ----------------- +
+| EARLYBIRDS | C10012    | 30                   | Tharman Krishna | A member which is an elite member should NOT be a regular member | A member with the customer number of C10012 and having the name Tharman Krishna is both an elite member and a regular member |
+| EARLYBIRDS | C10013    | 20                   | Tang King King | A member which is an elite member should NOT be a regular member | A member with the customer number of C10013 and having the name Tang King King is both an elite member and a regular member |
++ ---------- + --------- + -------------------- + ---------- + -------------- + ----------------- +
+2 rows
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Task 4
+
+SET GLOBAL general_log = 'ON';
+SET GLOBAL log_output = 'TABLE';
+DESCRIBE mysql.general_log;
+-- RUN A3TASK4
+
+SELECT SUBSTRING(CONVERT (argument USING utf8), 1, 6) AS command, event_time 
+FROM mysql.general_log
+WHERE
+	command_type IN ('Query') AND
+    (argument LIKE 'CREATE%' OR
+    argument LIKE 'ALTER%' OR
+    argument LIKE 'DROP%')
+GROUP BY command, event_time
+ORDER BY event_time;
+
++ ------------ + --------------- +
+| command      | event_time      |
++ ------------ + --------------- +
+| CREATE       | 2023-11-16 02:32:44.713241 |
+| CREATE       | 2023-11-16 02:32:44.735099 |
+| ALTER        | 2023-11-16 02:32:44.802273 |
+| DROP T       | 2023-11-16 02:32:44.862875 |
+| DROP T       | 2023-11-16 02:32:44.873889 |
++ ------------ + -------------------------- +
+5 rows
+
+SELECT SUBSTRING(CONVERT (argument USING utf8), 1, 6) AS command, COUNT(*) 
+FROM mysql.general_log
+WHERE
+	command_type IN ('Query') AND
+    (argument LIKE 'SELECT%' OR
+    argument LIKE 'INSERT%' OR
+    argument LIKE 'DELETE%' OR
+    argument LIKE 'UPDATE%')
+GROUP BY command
+ORDER BY COUNT(*) DESC;
+
++ ------------ + ------------- +
+| command      | COUNT(*)      |
++ ------------ + ------------- +
+| SELECT       | 53            |
+| DELETE       | 30            |
+| INSERT       | 15            |
+| UPDATE       | 6             |
++ ------------ + ------------- +
+4 rows
+
+SET GLOBAL general_log='OFF'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

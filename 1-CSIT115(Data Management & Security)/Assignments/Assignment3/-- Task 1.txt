@@ -1,0 +1,52 @@
+-- Task 1
+
+-- Part 1
+CREATE USER mohamedh027_1 IDENTIFIED BY 'mohamedh027_1';
+CREATE USER mohamedh027_2 IDENTIFIED BY 'mohamedh027_2';
+CREATE USER mohamedh027_3 IDENTIFIED BY 'mohamedh027_3';
+
+-- Part 2
+GRANT ALTER, DROP, SELECT, INSERT, UPDATE, DELETE ON mohamedh027.* TO mohamedh027_1
+WITH GRANT OPTION;
+
+-- Part 3
+GRANT CREATE VIEW, SELECT ON mohamedh027.customer to mohamedh027_2;
+GRANT CREATE VIEW, SELECT ON mohamedh027.member to mohamedh027_2;
+
+-- Part 4
+ALTER USER mohamedh027_3 WITH MAX_QUERIES_PER_HOUR 100;
+ALTER USER mohamedh027_3 WITH MAX_UPDATES_PER_HOUR 10;
+
+-- Part 5
+ALTER USER mohamedh027_2 PASSWORD EXPIRE;
+
+-- Part 6
+SELECT User, max_questions, max_updates, password_expired FROM mysql.user WHERE User LIKE 'mohamedh027%';
+
++ --------- + ------------------ + ---------------- + --------------------- +
+| User      | max_questions      | max_updates      | password_expired      |
++ --------- + ------------------ + ---------------- + --------------------- +
+| mohamedh027_1 | 0                  | 0                | N                     |
+| mohamedh027_2 | 0                  | 0                | Y                     |
+| mohamedh027_3 | 100                | 10               | N                     |
++ --------- + ------------------ + ---------------- + --------------------- +
+3 rows
+
+SELECT User, Select_priv, Insert_priv, Update_priv, Delete_priv, Drop_priv, Grant_priv, Alter_priv FROM mysql.db WHERE User LIKE 'mohamedh027%';
+
++ --------- + ---------------- + ---------------- + ---------------- + ---------------- + -------------- + --------------- + --------------- +
+| User      | Select_priv      | Insert_priv      | Update_priv      | Delete_priv      | Drop_priv      | Grant_priv      | Alter_priv      |
++ --------- + ---------------- + ---------------- + ---------------- + ---------------- + -------------- + --------------- + --------------- +
+| mohamedh027_1 | Y                | Y                | Y                | Y                | Y              | Y               | Y               |
++ --------- + ---------------- + ---------------- + ---------------- + ---------------- + -------------- + --------------- + --------------- +
+1 rows
+
+SELECT Db, User, Table_name, Table_priv FROM mysql.tables_priv WHERE USER LIKE 'mohamedh027%';
+
++ ------- + --------- + --------------- + --------------- +
+| Db      | User      | Table_name      | Table_priv      |
++ ------- + --------- + --------------- + --------------- +
+| mohamedh027 | mohamedh027_2 | customer        | Select,Create View |
+| mohamedh027 | mohamedh027_2 | member          | Select,Create View |
++ ------- + --------- + --------------- + --------------- +
+2 rows
