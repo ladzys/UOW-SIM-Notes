@@ -1,0 +1,431 @@
+#T4-Mohamed Haneefa Jiyavudeen-Assignment 2
+
+###############################################################################
+#Execution results
+'''
+C:\Users\jiyav\AppData\Local\Programs\Python\Python312\python.exe C:\Python\CSIT121\Assignment\T04F_Jiyavudeen_Asn2.py 
+************************************************************
+RUNNING TEST 1!!!
+************************************************************
+Result added successfully.
+--------------------------------------------------
+Course Code: CSIT121
+Course Name: Object Oriented Design and Programming
+Credit: 6
+--------------------------------------------------
+Student ID: 1001
+Student Name: John Doe
+--------------------------------------------------
+Student: John Doe
+Course: Object Oriented Design and Programming
+Coursework Score: 85
+Exam Score: 72
+Overall Score: 77.20
+--------------------------------------------------
+Term: 2024 Q1
+Start Date: 2024-03-01
+End Date: 2024-06-01
+--------------------------------------------------
+Term: 2024 Q1
+Number of Passes: 1
+Number of Failures: 0
+--------------------------------------------------
+************************************************************
+RUNNING TEST 2!!!
+************************************************************
+Result added successfully.
+--------------------------------------------------
+These are the found results:
+Student: Jack Ma
+Course: Introduction to Web Programming
+Coursework Score: 75
+Exam Score: 62
+Overall Score: 67.20
+--------------------------------------------------
+Result not found for Student ID: 1003, Course Code: CSIT121.
+************************************************************
+RUNNING TEST 3!!!
+************************************************************
+Result added successfully.
+Result added successfully.
+Result added successfully.
+--------------------------------------------------
+Term: 2024 Q3
+Number of Passes: 3
+Number of Failures: 0
+--------------------------------------------------
+The search results are as follows
+Student: Jick Ying
+Course: Database Management
+Coursework Score: 61
+Exam Score: 50
+Overall Score: 54.40
+--------------------------------------------------
+Student: Jick Ying
+Course: Database Management
+Practical Scores: 75, 80, 70
+Overall Score: 75.00
+--------------------------------------------------
+Student: Jick Ying
+Course: Database Management
+Coursework Score: 90
+Exam Score: 65
+Overall Score: 75.00
+--------------------------------------------------
+--------------------------------------------------
+Error: Invalid result object. Must be a Result or its subclass.
+--------------------------------------------------
+************************************************************
+RUNNING TEST 4!!!
+************************************************************
+Result added successfully.
+Result added successfully.
+************************************************************
+Academic Term Summary:
+--------------------------------------------------
+Term: 2024 Q1
+Start Date: 2024-03-01
+End Date: 2024-06-01
+--------------------------------------------------
+Term: 2024 Q1
+Number of Passes: 2
+Number of Failures: 0
+--------------------------------------------------
+Term GPA: 2.50
+************************************************************
+
+End of main
+
+Process finished with exit code 0
+
+'''
+####################################################################################
+from abc import ABC, abstractmethod
+
+class Course:
+
+    def __init__(self, code, name, credit):
+        self._code = code
+        self._name = name
+        self._credit = credit
+
+    def __str__(self):
+        return (f"Course Code: {self._code}\n"
+                f"Course Name: {self._name}\n"
+                f"Credit: {self._credit}")
+
+
+class Student:
+
+    def __init__(self, student_id, name):
+        self._id = student_id
+        self._name = name
+
+    def __str__(self):
+        return (f"Student ID: {self._id}\n"
+                f"Student Name: {self._name}")
+
+
+class Result(ABC):
+
+    def __init__(self, student, course):
+        self._student = student
+        self._course = course
+
+    @abstractmethod
+    def get_score(self):
+        pass
+
+    def get_grade(self):
+        score = self.get_score()
+        if score >= 80:
+            return 'A'
+        elif 70 <= score < 80:
+            return 'B'
+        elif 60 <= score < 70:
+            return 'C'
+        elif 50 <= score < 60:
+            return 'D'
+        else:
+            return 'F'
+
+    @classmethod
+    def get_gpa(cls, results):
+        total_points = 0
+        total_credits = 0
+
+        for result in results:
+            credit = result._course._credit
+            grade = result.get_grade()
+
+            if grade == 'A':
+                points_awarded = 4 * credit
+            elif grade == 'B':
+                points_awarded = 3 * credit
+            elif grade == 'C':
+                points_awarded = 2 * credit
+            elif grade == 'D':
+                points_awarded = 1 * credit
+            else:
+                points_awarded = 0 * credit
+
+            total_points += points_awarded
+            total_credits += credit
+
+        if total_credits > 0:
+            gpa = total_points / total_credits
+        else:
+            gpa = 0.0
+
+        return gpa
+
+    def __str__(self):
+        score = self.get_score()
+        grade = self.get_grade()
+        gpa = self.get_gpa()
+        return (f"Student ID: {self._student._id}\n"  # Use _id instead of id
+                f"Course Code: {self._course._code}\n"  # Use _code instead of code
+                f"Score: {score}\n"
+                f"Grade: {grade}")
+
+
+class PracticalResult(Result):
+
+    def __init__(self, student, course, p_score1, p_score2, p_score3):
+        super().__init__(student, course)
+        self._p_score1 = p_score1
+        self._p_score2 = p_score2
+        self._p_score3 = p_score3
+
+    def get_score(self):
+        return (self._p_score1 + self._p_score2 + self._p_score3) / 3
+
+    def __str__(self):
+        overall_score = self.get_score()
+        return (f"Student: {self._student._name}\nCourse: {self._course._name}\n"
+                f"Practical Scores: {self._p_score1}, {self._p_score2}, {self._p_score3}\n"
+                f"Overall Score: {overall_score:.2f}")
+
+
+class CourseResult(Result):
+
+    def __init__(self, student, course, cw_score, ex_score):
+        super().__init__(student, course)
+        self._cw_score = cw_score
+        self._ex_score = ex_score
+
+    def get_score(self):
+        #cw 40% ex 60%
+        return self._cw_score * 0.4 + self._ex_score * 0.6
+
+    def __str__(self):
+        overall_score = self.get_score()
+        return (f"Student: {self._student._name}\n"
+                f"Course: {self._course._name}\n"
+                f"Coursework Score: {self._cw_score}\n"
+                f"Exam Score: {self._ex_score}\n"
+                f"Overall Score: {overall_score:.2f}")
+
+
+class AcadTerm:
+
+    def __init__(self, term, start_date, end_date):
+        self._term = term
+        self._start_date = start_date
+        self._end_date = end_date
+        self._results = []
+
+    def add_result(self, result):
+        if not isinstance(result, Result):
+            raise ValueError("Invalid result object. Must be a Result or its subclass.")
+
+        if result in self._results:
+            print("Result already exists in the academic term.")
+            return
+
+        self._results.append(result)
+        print("Result added successfully.")
+
+    def remove_result(self, result):
+        try:
+            self._results.remove(result)
+            print("Result removed successfully.")
+        except ValueError:
+            print("Result not found in the academic term.")
+
+    def get_result(self, student_id, course_code):
+        for result in self._results:
+            if result._student._id == student_id and result._course._code == course_code:
+                return result
+        print(f"Result not found for Student ID: {student_id}, Course Code: {course_code}.")
+        return None
+
+    def get_result_summary(self):
+        num_passes = sum(1 for result in self._results if result.get_grade() != 'F')
+        num_failures = len(self._results) - num_passes
+        return (f"Term: {self._term}\n"
+                f"Number of Passes: {num_passes}\n"
+                f"Number of Failures: {num_failures}")
+
+    def search_result(self, code_or_id):
+        return [result for result in self._results if code_or_id
+                in (result._student._id, result._course._code)]
+
+    def __str__(self):
+        return (f"Term: {self._term}\n"
+                f"Start Date: {self._start_date}\n"
+                f"End Date: {self._end_date}")
+
+
+# Example usages:
+def test1():
+
+    print("*" * 60)
+    print("RUNNING TEST 1!!!")
+    print("*" * 60)
+    # Create a course
+    course = Course("CSIT121", "Object Oriented Design and Programming", 6)
+    # Create a student
+    student = Student("1001", "John Doe")
+    # Create a course result
+    course_result = CourseResult(student, course, 85, 72)
+    # Create an academic term
+    acad_term = AcadTerm("2024 Q1", "2024-03-01", "2024-06-01")
+    acad_term.add_result(course_result)
+
+    # Display results
+    print("-"*50)
+    print(course)
+    print("-"*50)
+    print(student)
+    print("-" * 50)
+    print(course_result)
+    print("-" * 50)
+    print(acad_term)
+    print("-" * 50)
+    print(acad_term.get_result_summary())
+    print("-" * 50)
+
+def test2():
+
+    print("*" * 60)
+    print("RUNNING TEST 2!!!")
+    print("*" * 60)
+    # Create a course
+    course = Course("CSIT128", "Introduction to Web Programming", 6)
+    # Create a student
+    student = Student("6006", "Jack Ma")
+    # Create a course result
+    course_result = CourseResult(student, course, 75, 62)
+    # Create an academic term
+    acad_term = AcadTerm("2023 Q4", "2023-10-01", "2023-12-01")
+    acad_term.add_result(course_result)
+
+    # Get a result by student ID and course code
+    result = acad_term.get_result("6006", "CSIT128")
+    if result:
+        print("-"*50)
+        print("These are the found results:")
+        print(result)
+        print("-" * 50)
+    else:
+        print("-" * 50)
+        print("Result not found.")
+        print("-" * 50)
+
+    # Try to get a result that doesn't exist
+    result = acad_term.get_result("1003", "CSIT121")  # Should print "Result not found."
+
+def test3():
+
+    print("*" * 60)
+    print("RUNNING TEST 3!!!")
+    print("*" * 60)
+    # Create a course
+    course = Course("CSIT115", "Database Management", 6)
+    # Create a student
+    student = Student("7002", "Jick Ying")
+    # Create a course result
+    course_result = CourseResult(student, course, 61, 50)
+    # Create an academic term
+    acad_term = AcadTerm("2024 Q3", "2024-07-01", "2024-09-01")
+    acad_term.add_result(course_result)
+
+    # Test PracticalResult
+    practical_result = PracticalResult(student, course, 75, 80, 70)
+    acad_term.add_result(practical_result)
+
+    # Test adding multiple results for the same student
+    course_result2 = CourseResult(student, course, 90, 65)
+    acad_term.add_result(course_result2)
+
+    # Test get_result_summary after adding multiple results
+    print("-" * 50)
+    print(acad_term.get_result_summary())
+    print("-" * 50)
+
+    # Test search_result functionality
+    search_results = acad_term.search_result("CSIT115")
+    if search_results:
+        print("The search results are as follows")
+        for result in search_results:
+            print(result)
+            print("-" * 50)
+    else:
+        print("-" * 50)
+        print("No results found for the specified search.")
+        print("-" * 50)
+
+    # Test error handling
+    try:
+        invalid_result = "invalid_result"
+        acad_term.add_result(invalid_result)  # This should raise a ValueError
+    except ValueError as e:
+        print("-" * 50)
+        print(f"Error: {e}")
+        print("-" * 50)
+
+def test4():
+
+    print("*" * 60)
+    print("RUNNING TEST 4!!!")
+    print("*" * 60)
+    # Create course and student instances
+    course1 = Course("CSIT121", "Object Oriented Design and Programming", 6)
+    course2 = Course("CSIT128", "Introduction to Web Programming", 6)
+    student = Student("1001", "John Doe")
+    # Create course results
+    course_result1 = CourseResult(student, course1, 85, 72)
+    course_result2 = CourseResult(student, course2, 75, 62)
+    # Create an academic term and add results
+    acad_term = AcadTerm("2024 Q1", "2024-03-01", "2024-06-01")
+    acad_term.add_result(course_result1)
+    acad_term.add_result(course_result2)
+
+    # Calculate GPA for the academic term
+    results = [course_result1, course_result2]
+    term_gpa = Result.get_gpa(results)
+
+    # Display results and GPA
+    print("*" * 60)
+    print("Academic Term Summary:")
+    print("-" * 50)
+    print(acad_term)
+    print("-" * 50)
+    print(acad_term.get_result_summary())
+    print("-" * 50)
+    print(f"Term GPA: {term_gpa:.2f}")
+    print("*" * 60)
+
+
+
+def main():
+    test1()
+    test2()
+    test3()
+    test4()
+
+    print()
+    print("End of main")
+
+main()

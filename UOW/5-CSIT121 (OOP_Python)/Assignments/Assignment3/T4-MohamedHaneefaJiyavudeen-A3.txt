@@ -1,0 +1,275 @@
+#TO4F Mohamed Haneefa Jiyavudeen A3
+#8496407
+
+####################################################################################################################################################
+#Execution results
+'''
+C:\Users\jiyav\AppData\Local\Programs\Python\Python312\python.exe C:\Python\CSIT121\Assignment\T04F_Jiyavudeen_A3.py 
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: 1
+Towns: ['KALLANG/WHAMPOA', 'ANG MO KIO', 'WOODLANDS', 'TAMPINES', 'JURONG EAST', 'PUNGGOL', 'GEYLANG', 'JURONG WEST', 'QUEENSTOWN', 'BUKIT TIMAH', 'BISHAN', 'YISHUN', 'SEMBAWANG', 'CLEMENTI', 'BUKIT BATOK', 'CHOA CHU KANG', 'SENGKANG', 'HOUGANG', 'MARINE PARADE', 'SERANGOON', 'TOA PAYOH', 'CENTRAL AREA', 'BUKIT MERAH', 'BEDOK', 'PASIR RIS', 'BUKIT PANJANG']
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: 2
+Flat Types: ['1 ROOM', '2 ROOM', '5 ROOM', '3 ROOM', 'MULTI-GENERATION', 'EXECUTIVE', '4 ROOM']
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: 3
+Flat Models: ['PREMIUM APARTMENT', 'DBSS', '2-ROOM', 'TYPE S1', 'SIMPLIFIED', 'APARTMENT', 'MODEL A', '3GEN', 'MODEL A-MAISONETTE', 'IMPROVED', 'NEW GENERATION', 'TERRACE', 'MULTI GENERATION', 'ADJOINED FLAT', 'PREMIUM APARTMENT LOFT', 'STANDARD', 'MODEL A2', 'MAISONETTE', 'TYPE S2']
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: Serangoon
+Invalid choice. Please try again.
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: 4
+Enter town(s) (comma-separated, leave blank for all): Serangoon
+Enter flat type(s) (comma-separated, leave blank for all): 3 room
+Enter flat model(s) (comma-separated, leave blank for all): apartment
+Initial data size: 9083
+Filtered by town (['Serangoon']), remaining size: 0
+Filtered by flat type (['3 room']), remaining size: 0
+Filtered by flat model (['apartment']), remaining size: 0
+No matching results found.
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: 4
+Enter town(s) (comma-separated, leave blank for all): SERANGOOON
+Enter flat type(s) (comma-separated, leave blank for all): 3 ROOM
+Enter flat model(s) (comma-separated, leave blank for all): APARTMENT
+Initial data size: 9083
+Filtered by town (['SERANGOOON']), remaining size: 0
+Filtered by flat type (['3 ROOM']), remaining size: 0
+Filtered by flat model (['APARTMENT']), remaining size: 0
+No matching results found.
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: 4
+Enter town(s) (comma-separated, leave blank for all): SERANGOON
+Enter flat type(s) (comma-separated, leave blank for all): 3 ROOM
+Enter flat model(s) (comma-separated, leave blank for all): IMPROVED
+Initial data size: 9083
+Filtered by town (['SERANGOON']), remaining size: 150
+Filtered by flat type (['3 ROOM']), remaining size: 27
+Filtered by flat model (['IMPROVED']), remaining size: 11
+{'month': '2024-01', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '5', 'street_name': 'LOR LEW LIAN', 'storey_range': '10 TO 12', 'floor_area_sqm': 73.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1978', 'remaining_lease': '53 years 05 months', 'resale_price': 465000.0}
+{'month': '2024-01', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '4', 'street_name': 'LOR LEW LIAN', 'storey_range': '10 TO 12', 'floor_area_sqm': 73.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1978', 'remaining_lease': '53 years 04 months', 'resale_price': 473000.0}
+{'month': '2024-02', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '1', 'street_name': 'LOR LEW LIAN', 'storey_range': '04 TO 06', 'floor_area_sqm': 64.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1978', 'remaining_lease': '53 years 04 months', 'resale_price': 385000.0}
+{'month': '2024-04', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '1', 'street_name': 'LOR LEW LIAN', 'storey_range': '01 TO 03', 'floor_area_sqm': 73.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1978', 'remaining_lease': '53 years 02 months', 'resale_price': 365000.0}
+{'month': '2024-01', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '305', 'street_name': 'SERANGOON AVE 2', 'storey_range': '04 TO 06', 'floor_area_sqm': 60.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1985', 'remaining_lease': '60 years 04 months', 'resale_price': 395000.0}
+{'month': '2024-01', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '305', 'street_name': 'SERANGOON AVE 2', 'storey_range': '10 TO 12', 'floor_area_sqm': 60.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1985', 'remaining_lease': '60 years 03 months', 'resale_price': 360000.0}
+{'month': '2024-03', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '305', 'street_name': 'SERANGOON AVE 2', 'storey_range': '01 TO 03', 'floor_area_sqm': 60.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1985', 'remaining_lease': '60 years 02 months', 'resale_price': 415000.0}
+{'month': '2024-03', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '306', 'street_name': 'SERANGOON AVE 2', 'storey_range': '07 TO 09', 'floor_area_sqm': 60.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1985', 'remaining_lease': '60 years 02 months', 'resale_price': 485000.0}
+{'month': '2024-04', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '303', 'street_name': 'SERANGOON AVE 2', 'storey_range': '10 TO 12', 'floor_area_sqm': 60.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1984', 'remaining_lease': '59 years 10 months', 'resale_price': 473888.0}
+{'month': '2024-01', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '108', 'street_name': 'SERANGOON NTH AVE 1', 'storey_range': '01 TO 03', 'floor_area_sqm': 60.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1985', 'remaining_lease': '60 years 02 months', 'resale_price': 370000.0}
+{'month': '2024-04', 'town': 'SERANGOON', 'flat_type': '3 ROOM', 'block': '106', 'street_name': 'SERANGOON NTH AVE 1', 'storey_range': '07 TO 09', 'floor_area_sqm': 60.0, 'flat_model': 'IMPROVED', 'lease_commence_date': '1984', 'remaining_lease': '59 years 05 months', 'resale_price': 380000.0}
+
+1. Get Towns
+2. Get Flat Types
+3. Get Flat Models
+4. Search
+5. Quit
+Enter choice: 5
+
+Process finished with exit code 0
+
+'''
+####################################################################################################################################################
+#ContentsInsideErrorLogFile
+'''
+Error 1: Resale price must be a number - {'month': '2024-01', 'town': 'ANG MO KIO', 'flat_type': '3 ROOM', 'block': '308B', 'street_name': 'ANG MO KIO AVE 1', 'storey_range': '25 TO 27', 'floor_area_sqm': '70', 'flat_model': 'MODEL A', 'lease_commence_date': '2012', 'remaining_lease': '87 years 09 months', 'resale_price': '-10'}
+Error 2: Floor area must be a number - {'month': '2024-01', 'town': 'ANG MO KIO', 'flat_type': '3 ROOM', 'block': '223', 'street_name': 'ANG MO KIO AVE 1', 'storey_range': '04 TO 06', 'floor_area_sqm': 'BIG', 'flat_model': 'NEW GENERATION', 'lease_commence_date': '1978', 'remaining_lease': '53 years 01 month', 'resale_price': '343800'}
+Error 3: Floor area must be a number - {'month': '2024-01', 'town': 'ANG MO KIO', 'flat_type': '3 ROOM', 'block': '307C', 'street_name': 'ANG MO KIO AVE 1', 'storey_range': '13 TO 15', 'floor_area_sqm': '5X', 'flat_model': 'MODEL A', 'lease_commence_date': '2012', 'remaining_lease': '87 years 08 months', 'resale_price': '600888'}
+Error 4: Resale price must be a number - {'month': '2024-02', 'town': 'ANG MO KIO', 'flat_type': '3 ROOM', 'block': '216', 'street_name': 'ANG MO KIO AVE 1', 'storey_range': '04 TO 06', 'floor_area_sqm': '73', 'flat_model': 'NEW GENERATION', 'lease_commence_date': '1976', 'remaining_lease': '51 years 03 months', 'resale_price': '-200000'}
+Error 5: Resale price must be a number - {'month': '2024-02', 'town': 'ANG MO KIO', 'flat_type': '3 ROOM', 'block': '219', 'street_name': 'ANG MO KIO AVE 1', 'storey_range': '04 TO 06', 'floor_area_sqm': '82', 'flat_model': 'NEW GENERATION', 'lease_commence_date': '1977', 'remaining_lease': '52 years 05 months', 'resale_price': 'Expensive'}
+
+'''
+####################################################################################################################################################
+#Python code
+
+#TO4F Mohamed Haneefa Jiyavudeen A3
+#8496407
+
+import csv
+
+class HDBResaleData:
+    def __init__(self, filename):
+        self.filename = filename
+        # List to store valid data
+        self.data = []
+        # List to store validation errors
+        self.errors = []
+        # Load data from CSV file when an instance is created
+        self.load_data()
+
+    def load_data(self):
+        try:
+            with open(self.filename, mode='r', encoding='utf-8-sig') as file:
+                # Create a CSV reader
+                reader = csv.DictReader(file)
+
+                # Iterate over each row in the CSV
+                for row_num, row in enumerate(reader, start=1):
+
+                    try:
+                        # Strip whitespace from keys and values
+                        cleaned_row = {key.strip(): value for key, value in row.items()}
+
+                        if 'floor_area_sqm' in cleaned_row:
+                            # Check if floor area is a number or a float
+                            if cleaned_row['floor_area_sqm'].replace('.', '').isdigit():
+                                # Convert floor area to float
+                                cleaned_row['floor_area_sqm'] = float(cleaned_row['floor_area_sqm'])
+                            else:
+                                # Raise an error if floor area is not a number
+                                raise ValueError("Floor area must be a number")
+
+                        if 'resale_price' in cleaned_row:
+                            # Check if resale price is a number or a float
+                            if cleaned_row['resale_price'].replace('.', '').isdigit():
+                                # Convert resale price to float
+                                cleaned_row['resale_price'] = float(cleaned_row['resale_price'])
+
+                            else:
+                                # Raise an error if resale price is not a number
+                                raise ValueError("Resale price must be a number")
+                                # Add cleaned row to data list
+                        self.data.append(cleaned_row)
+
+                    except ValueError as e:
+                        # Record error and row where it occurred
+                        self.errors.append({'row': row, 'error': str(e)})
+                        continue
+                        # Skip this row and proceed to the next one
+                        # Log errors to file
+            self.record_errors()
+        except Exception as e:
+            print(f"Failed to load data: {e}")
+
+    def record_errors(self):
+        # Open error log file for writing
+        with open('error_log.txt', mode='w', encoding='utf-8') as file:
+            # Iterate over errors
+            for idx, error in enumerate(self.errors, start=1):
+                # Write error message to file
+                file.write(f"Error {idx}: {error['error']} - {error['row']}\n")
+
+    def get_town(self):
+        # Extract unique town names from data
+        towns = list(set([row['town'] for row in self.data]))
+        return towns
+
+    def get_flat_type(self):
+        # Extract unique flat types from data
+        flat_types = list(set([row['flat_type'] for row in self.data]))
+        return flat_types
+
+    def get_flat_model(self):
+        # Extract unique flat models from data
+        flat_models = list(set([row['flat_model'] for row in self.data]))
+        return flat_models
+
+    def search(self, town=None, flat_type=None, flat_model=None):
+        # Initialize results with all data
+        results = self.data
+        print(f"Initial data size: {len(results)}")
+
+        if town:
+            if isinstance(town, str):
+                town = [town]
+                # Filter results by town
+            results = [row for row in results if row['town'] in town]
+            print(f"Filtered by town ({town}), remaining size: {len(results)}")
+
+        if flat_type:
+            if isinstance(flat_type, str):
+                flat_type = [flat_type]
+                # Filter results by flat type
+            results = [row for row in results if row['flat_type'] in flat_type]
+            print(f"Filtered by flat type ({flat_type}), remaining size: {len(results)}")
+
+        if flat_model:
+            if isinstance(flat_model, str):
+                flat_model = [flat_model]
+                # Filter results by flat model
+            results = [row for row in results if row['flat_model'] in flat_model]
+            print(f"Filtered by flat model ({flat_model}), remaining size: {len(results)}")
+        return results
+
+def main():
+    # Initialize HDBResaleData instance with CSV filename
+    data = HDBResaleData('Resale2024.csv')
+
+    while True:
+        print("\n1. Get Towns\n"
+              "2. Get Flat Types\n"
+              "3. Get Flat Models\n"
+              "4. Search\n"
+              "5. Quit")
+        choice = input("Enter choice: ")
+
+        if choice == '1':
+            # Get distinct towns
+            towns = data.get_town()
+            print("Towns:", towns if towns else "No data found")
+
+        elif choice == '2':
+            # Get distinct flat types
+            flat_types = data.get_flat_type()
+            print("Flat Types:", flat_types if flat_types else "No data found")
+
+        elif choice == '3':
+            # Get distinct flat models
+            flat_models = data.get_flat_model()
+            print("Flat Models:", flat_models if flat_models else "No data found")
+
+        elif choice == '4':
+            town = input("Enter town(s) (comma-separated, leave blank for all): ").split(',')
+            flat_type = input("Enter flat type(s) (comma-separated, leave blank for all): ").split(',')
+            flat_model = input("Enter flat model(s) (comma-separated, leave blank for all): ").split(',')
+            town = [t.strip() for t in town if t.strip()] or None
+            flat_type = [ft.strip() for ft in flat_type if ft.strip()] or None
+            flat_model = [fm.strip() for fm in flat_model if fm.strip()] or None
+            # Search for matching results
+            results = data.search(town, flat_type, flat_model)
+            if results:
+                for result in results:
+                    print(result)
+            else:
+                print("No matching results found.")
+        elif choice == '5':
+            break
+        else:
+            print("Invalid choice. Please try again.")
+main()
+
+####################################################################################################################################################
